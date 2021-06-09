@@ -12,6 +12,7 @@ public class Comuna {
     private double Infected_Q, Susceptible_Q, Recovered_Q;
     //private Pane graph;
     private static final AudioClip clip1 = new AudioClip("https://wavlist.com/wav/synthesizer02.wav");
+//    private static final AudioClip clip1 = new AudioClip(Paths.get("/home/theuszero/IdeaProyects/tarea2/Batman Transition Sound Effect.mp3").toUri().toString());
 
     public Comuna(double cant_p, double cant_inf){
         double width = SimulatorConfig.WIDTH;
