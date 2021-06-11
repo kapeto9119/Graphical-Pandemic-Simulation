@@ -2,26 +2,32 @@ package sample;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 
 public class Simulator {
-    private Timeline animation;
+    public Timeline animation;
     private Comuna comuna;
     private double simulationSamplingTime;
-    private double simulationTime;  // it goes along with real time, faster or slower than real time
-    private double delta_t;   // precision of discrete simulation time
+    public double simulationTime;
+    private double delta_t;
     private int cant_p, cant_inf;
     private double speed, deltaAngle, I_time, distance;
-    private boolean isPlaying;
     public ArrayList<Pedestrian> Pedestrian_list = new ArrayList<>();
+    private Scene mScene;
+    private Stage2 _stage2;
+    public double rate;
 
     /**
      * @param framePerSecond frequency of new views on screen
      * @param simulationTime2realTimeRate how faster the simulation runs relative to real time
      */
-    public Simulator (double framePerSecond, double simulationTime2realTimeRate, Comuna comuna, int _cant_p, int _cant_inf, double _speed, double _deltaAngle, double _I_time, double _distance){
+    public Simulator (Stage2 _stage2, Scene _mScene, double framePerSecond, double simulationTime2realTimeRate, Comuna comuna, double _delta_t, int _cant_p, int _cant_inf, double _speed, double _deltaAngle, double _I_time, double _distance){
+        this.mScene = _mScene;
+        this._stage2 = _stage2;
         this.comuna = comuna;
         this.cant_p = _cant_p;
         this.cant_inf = _cant_inf;
@@ -29,32 +35,28 @@ public class Simulator {
         this.deltaAngle = _deltaAngle;
         this.I_time = _I_time;
         this.distance = _distance;
-        this.isPlaying = false;
-        double viewRefreshPeriod = 1 / framePerSecond; // in [ms] real time used to display
-        // a new view on application
+        this.delta_t = _delta_t;
+        this.rate = 1;
+        double viewRefreshPeriod = 1 / framePerSecond;
+        buildPedestrianArray();
         simulationSamplingTime = viewRefreshPeriod * simulationTime2realTimeRate;
-        delta_t = SimulatorConfig.DELTA_T;
         simulationTime = 0;
 
         animation = new Timeline(new KeyFrame(Duration.millis(viewRefreshPeriod * 1000), e->takeAction()));
         animation.setCycleCount(Timeline.INDEFINITE);
-
-    }
-
-    public boolean isPlaying(){
-        return isPlaying;
     }
 
     private void takeAction() {
         double nextStop = simulationTime + simulationSamplingTime;
         for(; simulationTime < nextStop; simulationTime += delta_t) {
-            comuna.computeNextState(delta_t, Pedestrian_list); // compute its next state based on current global state
-            comuna.updateState(Pedestrian_list);             // update its state
+            comuna.computeNextState(delta_t, Pedestrian_list);
+            comuna.updateState(Pedestrian_list);
             comuna.updateView(Pedestrian_list);
             comuna.detectInfected(Pedestrian_list, simulationTime, distance);
             comuna.checkIfRecovered(simulationTime, Pedestrian_list, I_time);
         }
-        //???
+        System.out.println(simulationTime);
+        //detectArrow(mScene);
     }
 
     public void buildPedestrianArray(){
@@ -70,24 +72,29 @@ public class Simulator {
     }
 
     public void start(SimulatorMenuBar _simMenu){
+        rate = 1.0;
+        detectAnimationRate();
         animation.play();
         _simMenu.hideSettings();
-        isPlaying = true;
+    }
 
-        //comuna.getView().setOnKeyPressed( e->keyHandle(e));
+    public void detectAnimationRate(){
+        System.out.println(rate);
+        animation.setRate(rate);
     }
-    private void keyHandle (KeyEvent e) {
-	/// ?????
-    }
+
     public void stop(SimulatorMenuBar _simMenu){
         animation.stop();
         _simMenu.showSettings();
-        isPlaying = false;
     }
-    public void speedup(){
-       //????
-    }
-    public void slowdown(){
-       // ???
-    }
+
+//    public void speedup(){
+//        System.out.println("SpeedUp");
+//        animation.setRate(2.0);
+//    }
+//
+//    public void slowdown(){
+//        System.out.println("SlowDown");
+//        animation.setRate(0.5);
+//    }
 }

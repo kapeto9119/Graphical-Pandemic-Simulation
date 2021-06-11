@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="java">
     <CLASSES>
-      <root url="file:///usr/lib/jvm/java-14-openjdk/lib" />
+      <root url="file://C:/Program Files/Java/jdk-16.0.1/lib" />
     </CLASSES>
     <JAVADOC />
-    <NATIVE>
-      <root url="file:///usr/lib/jvm/java-14-openjdk/lib" />
-    </NATIVE>
-    <SOURCES />
-    <jarDirectory url="file:///usr/lib/jvm/java-14-openjdk/lib" recursive="false" />
+    <SOURCES>
+      <root url="file://C:/Program Files/Java/jdk-16.0.1/lib" />
+    </SOURCES>
+    <jarDirectory url="file://C:/Program Files/Java/jdk-16.0.1/lib" recursive="false" />
+    <jarDirectory url="file://C:/Program Files/Java/jdk-16.0.1/lib" recursive="false" type="SOURCES" />
   </library>
 </component>

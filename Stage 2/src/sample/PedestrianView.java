@@ -1,4 +1,5 @@
 package sample;
+
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Polygon;
@@ -10,7 +11,7 @@ public class PedestrianView {
     private Rectangle avatarSusc;
     private Circle avatarInf;
     private Polygon avatarRec;
-    private final double SIZE = 5;
+    public final double SIZE = 5;
 
     public PedestrianView(Comuna comuna, Pedestrian p) {
         this.person = p;
@@ -32,10 +33,8 @@ public class PedestrianView {
     public Rectangle createSusc(){
         Rectangle avatar;
         avatar = new Rectangle(SIZE, SIZE, Color.BLUE);
-        avatar.setX(person.getX()-SIZE/2);   // Rectangle x position is the X coordinate of the
-        // upper-left corner of the rectangle
-        avatar.setY(person.getY()-SIZE/2); // Rectangle y position is the Y coordinate of the
-        // upper-left corner of the rectangle
+        avatar.setX(person.getX()-SIZE/2);
+        avatar.setY(person.getY()-SIZE/2);
         return avatar;
     }
 

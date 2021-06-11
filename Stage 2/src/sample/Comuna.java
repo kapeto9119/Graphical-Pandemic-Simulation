@@ -8,28 +8,26 @@ import java.util.ArrayList;
 public class Comuna {
     private Pedestrian person;
     private Rectangle2D territory;
-    private ComunaView view;
+    public ComunaView view;
     private double Infected_Q, Susceptible_Q, Recovered_Q;
-    //private Pane graph;
     private static final AudioClip clip1 = new AudioClip("https://wavlist.com/wav/synthesizer02.wav");
 
-    public Comuna(double cant_p, double cant_inf){
+    public Comuna(){
         double width = SimulatorConfig.WIDTH;
         double length = SimulatorConfig.LENGTH;
-        Infected_Q = cant_inf;
-        Susceptible_Q = cant_p - cant_inf;
+        Infected_Q = SimulatorConfig.I;
+        Susceptible_Q = SimulatorConfig.N - SimulatorConfig.I;
         Recovered_Q = 0;
         territory = new Rectangle2D(0,0, width, length);
         double speed = SimulatorConfig.SPEED;
         double deltaAngle = SimulatorConfig.DELTA_THETA;
-        view = new ComunaView(this); // What if you exchange this and the follow line?
-        //graph = new Pane();  // to be completed in other stages.
-
+        view = new ComunaView(this);
     }
 
     public double getWidth() {
         return territory.getWidth();
     }
+
     public double getHeight() {
         return territory.getHeight();
     }
@@ -41,19 +39,18 @@ public class Comuna {
     }
 
     public void updateState(ArrayList<Pedestrian> _PedestrianList) {
-        for(int i = 0; i < _PedestrianList.size(); i++){
-            _PedestrianList.get(i).updateState();
+        for (Pedestrian pedestrian : _PedestrianList) {
+            pedestrian.updateState();
         }
     }
 
     public double DistanceB2P(Pedestrian _A, Pedestrian _B){ //Distance between 2 points
         double X = Math.pow((_A.getX() - _B.getX()), 2);
         double Y = Math.pow((_A.getY() - _B.getY()), 2);
-
         return Math.sqrt(X + Y);
     }
 
-    public void detectInfected(ArrayList<Pedestrian> _PedestrianList, double time, double distance){ //FALTA PONER RESTRICCION DE TIEMPO
+    public void detectInfected(ArrayList<Pedestrian> _PedestrianList, double time, double distance){
 
         for (int i = 0; i < _PedestrianList.size(); i++){
             for (int j = i + 1; j < _PedestrianList.size(); j++){
@@ -61,9 +58,7 @@ public class Comuna {
                     if (_PedestrianList.get(i).getStatus() == "susceptible" && _PedestrianList.get(j).getStatus() == "infectado"){
                         double probability = 0.7;
                         double r = Math.floor(Math.random() * 100) / 100;
-
                         if (r <= probability){
-
                             _PedestrianList.get(i).setStatus("infectado");
                             _PedestrianList.get(i).setInfectionTime(time);
                             clip1.setVolume(0.3);
@@ -115,7 +110,8 @@ public class Comuna {
     public Group getView() {
         return view;
     }
-//    public Pane getGraph(){
-//        return graph;
-//    }
+
+    public void refreshView(){
+        view.getChildren().clear();
+    }
  }

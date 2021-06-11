@@ -4,7 +4,7 @@ public class Pedestrian {
     private double x, y, speed, angle, deltaAngle;
     private double x_tPlusDelta, y_tPlusDelta;
     private Comuna comuna;
-    private PedestrianView pedestrianView;
+    public PedestrianView pedestrianView;
     private String status;
     private double infected_time;
 
