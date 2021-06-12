@@ -24,6 +24,7 @@ public class Simulator {
     private Graph graph;
     private boolean initV;
     private boolean detVac;
+    public VaccinationCentre vacss;
 
     /**
      * @param framePerSecond frequency of new views on screen
@@ -44,6 +45,7 @@ public class Simulator {
         this.p0 = _p0;
         this.p1 = _p1;
         this.p2 = _p2;
+        this.vacss = new VaccinationCentre(comuna);
         this.maskFraction = _maskFraction;
         double viewRefreshPeriod = 1 / framePerSecond;
         buildPersonArray();
@@ -55,6 +57,7 @@ public class Simulator {
         animation = new Timeline(new KeyFrame(Duration.millis(viewRefreshPeriod * 1000), e->takeAction()));
         animation.setCycleCount(Timeline.INDEFINITE);
         graph = _graph;
+        System.out.println("SIMULATOR VACTIME: " + SimulatorConfig.VAC_TIME);
     }
 
     private void takeAction() {
@@ -67,13 +70,15 @@ public class Simulator {
             comuna.detectInfected(Pedestrian_list, simulationTime, distance, p0, p1, p2);
             comuna.checkIfRecovered(simulationTime, Pedestrian_list, I_time);
             if (detVac){
-                comuna.detectVaccineCentre(Pedestrian_list);
+                vacss.detectVaccineCentre(Pedestrian_list);
             }
         }
+        System.out.println(simulationTime);
         if (Math.round(simulationTime) == SimulatorConfig.VAC_TIME){
             if (initV){
+                System.out.println("initV: " + SimulatorConfig.VAC_TIME + ", simtime: " + simulationTime);
                 detVac = true;
-                comuna.initVac();
+                vacss.initVac();
                 initV = false;
             }
         }

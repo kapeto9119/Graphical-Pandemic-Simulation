@@ -28,7 +28,7 @@ public class Graph {
         Recovered = new XYChart.Series<>();
         Recovered.setName("Recovered");
         Vaccinated = new XYChart.Series<>();
-        Vaccinated.setName("Susceptibles");
+        Vaccinated.setName("Vaccinated");
 
         Susceptibles.getData().add(new XYChart.Data(0, comuna.Susceptible_Q));
         Infected.getData().add(new XYChart.Data(0, comuna.Infected_Q));

@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class VaccinationCentre {
 
@@ -11,8 +12,11 @@ public class VaccinationCentre {
     Rectangle2D vaccinationCentre;
     Rectangle perimeter;
     Comuna comuna;
+    private ArrayList<VaccinationCentre> vacs = new ArrayList<>();
 
-    public VaccinationCentre(Comuna comuna){
+    public VaccinationCentre(Comuna _comuna){
+
+        comuna = _comuna;
 
         double Valor_max_X = SimulatorConfig.WIDTH - SimulatorConfig.VAC_SIZE;
         double Valor_min_X = 0;
@@ -29,6 +33,38 @@ public class VaccinationCentre {
         perimeter.setX(x - (SimulatorConfig.VAC_SIZE / 2));
         perimeter.setY(y + (SimulatorConfig.VAC_SIZE / 2));
 
+    }
+
+    public void initVac(){
+        for (int i = 0; i < SimulatorConfig.NUM_VAC; i++){
+            VaccinationCentre vac = new VaccinationCentre(comuna);
+            vacs.add(vac);
+
+            for (int k = 0; k < vacs.size(); k++){
+                for (int l = 0; l < vacs.size(); l++){
+                    if (vacs.get(k) != vacs.get(l)){
+                        while (vacs.get(k).vaccinationCentre.intersects(vacs.get(l).vaccinationCentre)){
+                            vacs.get(k).updateRandomCoor();
+                        }
+                    }
+                }
+            }
+            comuna.view.getChildren().add(vac.perimeter);
+        }
+    }
+
+    public void detectVaccineCentre(ArrayList<Pedestrian> _PedestrianList){
+        for (Pedestrian pedestrian : _PedestrianList) {
+            for (VaccinationCentre vacunatorio : vacs) {
+                if (vacunatorio.vaccinationCentre.contains(pedestrian.getX(), pedestrian.getY())) {
+                    if (pedestrian.getStatus().equals("susceptible")) {
+                        pedestrian.setStatus("vacunado");
+                        comuna.Susceptible_Q -= 1;
+                        comuna.Vaccinated_Q += 1;
+                    }
+                }
+            }
+        }
     }
 
     public void updateRandomCoor(){

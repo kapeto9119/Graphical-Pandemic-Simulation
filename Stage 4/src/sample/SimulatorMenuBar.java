@@ -22,7 +22,7 @@ public class SimulatorMenuBar extends MenuBar {
 
     private final Menu settingsMenu;
 
-    public SimulatorMenuBar(Stage4 stage4, Scene mScene, BorderPane bpMain, Simulator simulator){
+    public SimulatorMenuBar(Stage4 stage4, Scene mScene, BorderPane bpMain, Simulator simulator, boolean mute){
         Menu controlMenu = new Menu("Control");
         getMenus().add(controlMenu);
         settingsMenu = new Menu("Settings");
@@ -51,12 +51,14 @@ public class SimulatorMenuBar extends MenuBar {
             title.setFont(new Font("Cambria", 30));
             //title.setPrefSize(50, 50);
 
+            ToggleButton toggleBtn = new ToggleButton("Mute");
+
             Label label7 = new Label("Width:");
             TextField _WIDTH = new TextField(String.valueOf(SimulatorConfig.WIDTH));
             Label label8 = new Label("Length:");
             TextField _LENGTH = new TextField(String.valueOf(SimulatorConfig.LENGTH));
             HBox wAndL = new HBox(10);
-            wAndL.getChildren().addAll(label7, _WIDTH, label8, _LENGTH);
+            wAndL.getChildren().addAll(label7, _WIDTH, label8, _LENGTH, toggleBtn);
             wAndL.setAlignment(Pos.CENTER);
 
             Label label0 = new Label("Number of individuals:");
@@ -234,6 +236,7 @@ public class SimulatorMenuBar extends MenuBar {
 
             btn2.setOnAction(f -> {
 
+                boolean mute1 = toggleBtn.isSelected();
 
                 SimulatorConfig.N = (double) _N.getValue();
                 SimulatorConfig.I = (double) _I.getValue();
@@ -260,7 +263,6 @@ public class SimulatorMenuBar extends MenuBar {
                 SimulatorConfig.VAC_SIZE = _VAC_SIZE.getValue();
                 SimulatorConfig.VAC_TIME = _VAC_TIME.getValue();
 
-
                 stage4.root.getChildren().remove(stage4.graph.stack);
 
                 stage4.graph.Susceptibles.getData().clear();
@@ -270,33 +272,12 @@ public class SimulatorMenuBar extends MenuBar {
                 stage4.graph.stack.getData().clear();
 
                 stage4.comuna.refreshView();
-                stage4.comuna = new Comuna();
+                stage4.comuna = new Comuna(stage4.file, mute);
 
                 stage4.comuna.view = new ComunaView(stage4.comuna);
 
                 stage4.graph = new Graph(stage4.comuna);
 
-//                NumberAxis xAxis = new NumberAxis();
-//                NumberAxis yAxis = new NumberAxis();
-//
-//                stage4.graph.stack = new StackedAreaChart(xAxis,yAxis);
-//                stage4.graph.stack.setTitle("Pandemic Evolution Chart");
-//                stage4.graph.stack.setAnimated(false);
-//
-//                stage4.graph.Susceptibles = new XYChart.Series<>();
-//                stage4.graph.Susceptibles.setName("Susceptibles");
-//                stage4.graph.Infected = new XYChart.Series<>();
-//                stage4.graph.Infected.setName("Infected");
-//                stage4.graph.Recovered = new XYChart.Series<>();
-//                stage4.graph.Recovered.setName("Recovered");
-//
-//                stage4.graph.Susceptibles.getData().add(new XYChart.Data(0, stage4.comuna.Susceptible_Q));
-//                stage4.graph.Infected.getData().add(new XYChart.Data(0, stage4.comuna.Infected_Q));
-//                stage4.graph.Recovered.getData().add(new XYChart.Data(0, stage4.comuna.Recovered_Q));
-//
-//                stage4.graph.stack.getData().add(stage4.graph.Infected);
-//                stage4.graph.stack.getData().add(stage4.graph.Recovered);
-//                stage4.graph.stack.getData().add(stage4.graph.Susceptibles);
                 stage4.splitPane.getItems().removeAll(stage4.p, stage4.root);
 
                 stage4.root = new Group();
@@ -305,7 +286,9 @@ public class SimulatorMenuBar extends MenuBar {
                 stage4.simulator = new Simulator(stage4, stage4.mScene, 15, 1, stage4.graph, stage4.comuna, SimulatorConfig.DELTA_T, (int)SimulatorConfig.N, (int)SimulatorConfig.I, SimulatorConfig.SPEED, SimulatorConfig.DELTA_THETA, SimulatorConfig.I_TIME, SimulatorConfig.D, SimulatorConfig.M, SimulatorConfig.P0, SimulatorConfig.P1, SimulatorConfig.P2);
                 stage4.simulator.simulationTime = 0;
 
-                stage4.borderPane.setTop(new SimulatorMenuBar(stage4, mScene, stage4.borderPane, stage4.simulator));
+                stage4.simulator.vacss = new VaccinationCentre(stage4.comuna);
+
+                stage4.borderPane.setTop(new SimulatorMenuBar(stage4, mScene, stage4.borderPane, stage4.simulator, mute1));
 
                 stage4.p.setCenter(stage4.comuna.getView());
                 stage4.splitPane.getItems().addAll(stage4.p, stage4.root);
@@ -315,13 +298,13 @@ public class SimulatorMenuBar extends MenuBar {
                 stage4.mScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent keyEvent) {
+                        if (keyEvent.getCode() == KeyCode.LEFT){
                             if (stage4.simulator.rate == 1){
                                 stage4.simulator.rate = 0.5;
-                        if (keyEvent.getCode() == KeyCode.LEFT){
                                 stage4.simulator.detectAnimationRate();
+                            }
                             if (stage4.simulator.rate == 2){
                                 stage4.simulator.rate = 1;
-                            }
                                 stage4.simulator.detectAnimationRate();
                             }
                             if (stage4.simulator.rate == 4){

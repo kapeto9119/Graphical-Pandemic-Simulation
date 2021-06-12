@@ -10,7 +10,7 @@ public class PedestrianView {
     private Comuna comuna;
     private Rectangle avatarSusc;
     private Circle avatarInf;
-    private Polygon avatarRec;
+    private Rectangle avatarRec;
     public final double SIZE = 5;
 
     public PedestrianView(Comuna comuna, Pedestrian p) {
@@ -46,16 +46,11 @@ public class PedestrianView {
         return avatar;
     }
 
-    public Polygon createRec(){
-        Polygon avatar;
-        avatar = new Polygon(
-            0d, 0d,
-            (SIZE * Math.tan(180)), -SIZE,
-            -(SIZE * Math.tan(180)), -SIZE
-        );
-        avatar.setLayoutX(person.getX());
-        avatar.setLayoutY(person.getY());
-        avatar.setFill(Color.GREEN);
+    public Rectangle createRec(){
+        Rectangle avatar;
+        avatar = new Rectangle(SIZE + 3, SIZE + 3, Color.BROWN);
+        avatar.setX(person.getX() - SIZE/2);
+        avatar.setY(person.getY() + SIZE/2);
         return avatar;
     }
 
@@ -68,9 +63,9 @@ public class PedestrianView {
             avatarInf.setCenterY(p.getX());
             avatarInf.setCenterY(p.getY());
         }
-        if (p.getStatus() == "recuperado"){
-            avatarRec.setLayoutX(p.getX());
-            avatarRec.setLayoutY(p.getY());
+        if (p.getStatus().equals("recuperado")){
+            avatarRec.setX(p.getX());
+            avatarRec.setY(p.getY());
         }
     }
 

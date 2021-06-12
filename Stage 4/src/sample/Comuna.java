@@ -11,10 +11,12 @@ public class Comuna {
     private Rectangle2D territory;
     public ComunaView view;
     public double Infected_Q, Susceptible_Q, Recovered_Q, Vaccinated_Q;
-    private static final AudioClip clip1 = new AudioClip("https://wavlist.com/wav/synthesizer02.wav");
-    private ArrayList<VaccinationCentre> vacunatorios = new ArrayList<>();
+//    private static final AudioClip clip1 = new AudioClip("https://wavlist.com/wav/synthesizer02.wav");
+    private final AudioClip clip1;
+//    private ArrayList<VaccinationCentre> vacunatorios = new ArrayList<>();
+    boolean mute;
 
-    public Comuna(){
+    public Comuna(String file, boolean _mute){
         double width = SimulatorConfig.WIDTH;
         double length = SimulatorConfig.LENGTH;
         Infected_Q = SimulatorConfig.I;
@@ -24,6 +26,8 @@ public class Comuna {
         double speed = SimulatorConfig.SPEED;
         double deltaAngle = SimulatorConfig.DELTA_THETA;
         view = new ComunaView(this);
+        clip1 = new AudioClip("file:" + file);
+        mute = _mute;
     }
 
     public double getWidth() {
@@ -34,37 +38,37 @@ public class Comuna {
         return territory.getHeight();
     }
 
-    public void initVac(){
-        for (int i = 0; i < SimulatorConfig.NUM_VAC; i++){
-            VaccinationCentre vac = new VaccinationCentre(this);
-            vacunatorios.add(vac);
+//    public void initVac(){
+//        for (int i = 0; i < SimulatorConfig.NUM_VAC; i++){
+//            VaccinationCentre vac = new VaccinationCentre(this);
+//            vacunatorios.add(vac);
+//
+//            for (int k = 0; k < vacunatorios.size(); k++){
+//                for (int l = 0; l < vacunatorios.size(); l++){
+//                    if (vacunatorios.get(k) != vacunatorios.get(l)){
+//                        while (vacunatorios.get(k).vaccinationCentre.intersects(vacunatorios.get(l).vaccinationCentre)){
+//                            vacunatorios.get(k).updateRandomCoor();
+//                        }
+//                    }
+//                }
+//            }
+//            view.getChildren().add(vac.perimeter);
+//        }
+//    }
 
-            for (int k = 0; k < vacunatorios.size(); k++){
-                for (int l = 0; l < vacunatorios.size(); l++){
-                    if (vacunatorios.get(k) != vacunatorios.get(l)){
-                        while (vacunatorios.get(k).vaccinationCentre.intersects(vacunatorios.get(l).vaccinationCentre)){
-                            vacunatorios.get(k).updateRandomCoor();
-                        }
-                    }
-                }
-            }
-            view.getChildren().add(vac.perimeter);
-        }
-    }
-
-    public void detectVaccineCentre(ArrayList<Pedestrian> _PedestrianList){
-        for (Pedestrian pedestrian : _PedestrianList) {
-            for (VaccinationCentre vacunatorio : vacunatorios) {
-                if (vacunatorio.vaccinationCentre.contains(pedestrian.getX(), pedestrian.getY())) {
-                    if (pedestrian.getStatus().equals("susceptible")) {
-                        pedestrian.setStatus("vacunado");
-                        Susceptible_Q -= 1;
-                        Vaccinated_Q += 1;
-                    }
-                }
-            }
-        }
-    }
+//    public void detectVaccineCentre(ArrayList<Pedestrian> _PedestrianList){
+//        for (Pedestrian pedestrian : _PedestrianList) {
+//            for (VaccinationCentre vacunatorio : vacunatorios) {
+//                if (vacunatorio.vaccinationCentre.contains(pedestrian.getX(), pedestrian.getY())) {
+//                    if (pedestrian.getStatus().equals("susceptible")) {
+//                        pedestrian.setStatus("vacunado");
+//                        Susceptible_Q -= 1;
+//                        Vaccinated_Q += 1;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     public void computeNextState (double delta_t, ArrayList<Pedestrian> _PedestrianList) {
         for (Pedestrian pedestrian : _PedestrianList) {
@@ -93,8 +97,10 @@ public class Comuna {
                             if ((Math.floor(Math.random() * 100) / 100) <= _p2){
                                 _IndividuosList.get(i).setStatus("infectado");
                                 _IndividuosList.get(i).setInfectionTime(time);
-                                clip1.setVolume(0.3);
-                                clip1.play();
+                                if (!mute){
+                                    clip1.setVolume(0.7);
+                                    clip1.play();
+                                }
                                 this.Infected_Q += 1;
                                 this.Susceptible_Q -= 1;
                             }
@@ -103,8 +109,10 @@ public class Comuna {
                             if ((Math.floor(Math.random() * 100) / 100) <= _p1){
                                 _IndividuosList.get(i).setStatus("infectado");
                                 _IndividuosList.get(i).setInfectionTime(time);
-                                clip1.setVolume(0.3);
-                                clip1.play();
+                                if (!mute){
+                                    clip1.setVolume(0.7);
+                                    clip1.play();
+                                }
                                 this.Infected_Q += 1;
                                 this.Susceptible_Q -= 1;
                             }
@@ -113,8 +121,10 @@ public class Comuna {
                             if ((Math.floor(Math.random() * 100) / 100) <= _p0){
                                 _IndividuosList.get(i).setStatus("infectado");
                                 _IndividuosList.get(i).setInfectionTime(time);
-                                clip1.setVolume(0.3);
-                                clip1.play();
+                                if (!mute){
+                                    clip1.setVolume(0.7);
+                                    clip1.play();
+                                }
                                 this.Infected_Q += 1;
                                 this.Susceptible_Q -= 1;
                             }
@@ -125,8 +135,10 @@ public class Comuna {
                             if ((Math.floor(Math.random() * 100) / 100) <= _p2){
                                 _IndividuosList.get(j).setStatus("infectado");
                                 _IndividuosList.get(j).setInfectionTime(time);
-                                clip1.setVolume(0.3);
-                                clip1.play();
+                                if (!mute){
+                                    clip1.setVolume(0.7);
+                                    clip1.play();
+                                }
                                 this.Infected_Q += 1;
                                 this.Susceptible_Q -= 1;
                             }
@@ -135,8 +147,10 @@ public class Comuna {
                             if ((Math.floor(Math.random() * 100) / 100) <= _p1){
                                 _IndividuosList.get(j).setStatus("infectado");
                                 _IndividuosList.get(j).setInfectionTime(time);
-                                clip1.setVolume(0.3);
-                                clip1.play();
+                                if (!mute){
+                                    clip1.setVolume(0.7);
+                                    clip1.play();
+                                }
                                 this.Infected_Q += 1;
                                 this.Susceptible_Q -= 1;
                             }
@@ -145,8 +159,10 @@ public class Comuna {
                             if ((Math.floor(Math.random() * 100) / 100) <= _p0){
                                 _IndividuosList.get(j).setStatus("infectado");
                                 _IndividuosList.get(j).setInfectionTime(time);
-                                clip1.setVolume(0.3);
-                                clip1.play();
+                                if (!mute){
+                                    clip1.setVolume(0.7);
+                                    clip1.play();
+                                }
                                 this.Infected_Q += 1;
                                 this.Susceptible_Q -= 1;
                             }
