@@ -55,7 +55,7 @@ public class Simulator {
             comuna.detectInfected(Pedestrian_list, simulationTime, distance);
             comuna.checkIfRecovered(simulationTime, Pedestrian_list, I_time);
         }
-        System.out.println(simulationTime);
+        //System.out.println(simulationTime);
         //detectArrow(mScene);
     }
 
@@ -79,7 +79,7 @@ public class Simulator {
     }
 
     public void detectAnimationRate(){
-        System.out.println(rate);
+        //System.out.println(rate);
         animation.setRate(rate);
     }
 
