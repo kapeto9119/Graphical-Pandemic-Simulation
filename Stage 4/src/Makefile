@@ -15,7 +15,7 @@ default: classes
 classes: $(CLASSES:.java=.class)
 
 run:
-	$(JVM) $(MAIN) $(ARGS)
+	$(JVM) $(MAIN) $(ARGS) 'BatmanSoundEffect.mp3'
 
 clean:
 	$(RM) *.class
