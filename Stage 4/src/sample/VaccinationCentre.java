@@ -12,7 +12,7 @@ public class VaccinationCentre {
     Rectangle2D vaccinationCentre;
     Rectangle perimeter;
     Comuna comuna;
-    private ArrayList<VaccinationCentre> vacs = new ArrayList<>();
+    private final ArrayList<VaccinationCentre> vacs = new ArrayList<>();
 
     public VaccinationCentre(Comuna _comuna){
 
@@ -41,9 +41,9 @@ public class VaccinationCentre {
             vacs.add(vac);
 
             for (int k = 0; k < vacs.size(); k++){
-                for (int l = 0; l < vacs.size(); l++){
-                    if (vacs.get(k) != vacs.get(l)){
-                        while (vacs.get(k).vaccinationCentre.intersects(vacs.get(l).vaccinationCentre)){
+                for (VaccinationCentre centre : vacs) {
+                    if (vacs.get(k) != centre) {
+                        while (vacs.get(k).vaccinationCentre.intersects(centre.vaccinationCentre)) {
                             vacs.get(k).updateRandomCoor();
                         }
                     }

@@ -9,8 +9,8 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class PedestrianView {
-    private Pedestrian person;
-    private Comuna comuna;
+    private final Pedestrian person;
+    private final Comuna comuna;
     private Rectangle avatarSusc;
     private Rectangle suscBorder;
     private Circle avatarInf;
@@ -27,11 +27,9 @@ public class PedestrianView {
                 avatarSusc = createSusc();
                 suscBorder = createSuscBorder();
                 comuna.getView().getChildren().addAll(suscBorder, avatarSusc);
-                //Borde negro
             }else {
                 avatarSusc = createSusc();
                 comuna.getView().getChildren().add(avatarSusc);
-                //sin borde
             }
         }
         if (p.getStatus().equals("infectado")){
@@ -39,12 +37,10 @@ public class PedestrianView {
                 avatarInf = createInf();
                 infBorder = createInfBorderMask();
                 comuna.getView().getChildren().addAll(infBorder, avatarInf);
-                //Borde negro
             }else {
                 avatarInf = createInf();
                 infBorder = createInfBorderNoMask();
                 comuna.getView().getChildren().addAll(infBorder, avatarInf);
-                //Borde rojo intenso
             }
         }
     }

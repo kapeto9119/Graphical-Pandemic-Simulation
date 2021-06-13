@@ -3,10 +3,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 
 public class Comuna {
-    private Pedestrian person;
-    private Rectangle2D territory;
-    private ComunaView view;
-    //private Pane graph;
+    private final Pedestrian person;
+    private final Rectangle2D territory;
+    private final ComunaView view;
 
     public Comuna(){
         double width = SimulatorConfig.WIDTH;
@@ -15,12 +14,8 @@ public class Comuna {
         territory = new Rectangle2D(0,0, width, length);
         double speed = SimulatorConfig.SPEED;
         double deltaAngle = SimulatorConfig.DELTA_THETA;
-        view = new ComunaView(this); // What if you exchange this and the follow line?
+        view = new ComunaView(this);
         person = new Pedestrian(this, speed, deltaAngle);
-//        if (view == null) {
-//            System.out.println("AAAAAAAAAAAAAAAAAAA");
-//        }
-        //graph = new Pane();  // to be completed in other stages.
     }
     public double getWidth() {
         return territory.getWidth();
@@ -37,13 +32,7 @@ public class Comuna {
     public void updateView(){
         view.update(person);
     }
-    public Pedestrian getPedestrian() {
-        return person;
-    }
     public Group getView() {
         return view;
     }
-//    public Pane getGraph(){
-//        return graph;
-//    }
  }

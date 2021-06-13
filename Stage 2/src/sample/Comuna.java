@@ -6,7 +6,7 @@ import javafx.scene.media.AudioClip;
 import java.util.ArrayList;
 
 public class Comuna {
-    private Pedestrian person;
+    //private Pedestrian person;
     private Rectangle2D territory;
     public ComunaView view;
     private double Infected_Q, Susceptible_Q, Recovered_Q;
@@ -19,8 +19,6 @@ public class Comuna {
         Susceptible_Q = SimulatorConfig.N - SimulatorConfig.I;
         Recovered_Q = 0;
         territory = new Rectangle2D(0,0, width, length);
-        double speed = SimulatorConfig.SPEED;
-        double deltaAngle = SimulatorConfig.DELTA_THETA;
         view = new ComunaView(this);
     }
 
@@ -103,9 +101,9 @@ public class Comuna {
         }
     }
 
-    public Pedestrian getPedestrian() {
-        return person;
-    }
+//    public Pedestrian getPedestrian() {
+//        return person;
+//    }
 
     public Group getView() {
         return view;

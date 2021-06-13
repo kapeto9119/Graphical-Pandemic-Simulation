@@ -11,9 +11,7 @@ public class Comuna {
     private Rectangle2D territory;
     public ComunaView view;
     public double Infected_Q, Susceptible_Q, Recovered_Q, Vaccinated_Q;
-//    private static final AudioClip clip1 = new AudioClip("https://wavlist.com/wav/synthesizer02.wav");
     private final AudioClip clip1;
-//    private ArrayList<VaccinationCentre> vacunatorios = new ArrayList<>();
     boolean mute;
 
     public Comuna(String file, boolean _mute){
@@ -23,8 +21,6 @@ public class Comuna {
         Susceptible_Q = SimulatorConfig.N - SimulatorConfig.I;
         Recovered_Q = 0;
         territory = new Rectangle2D(0,0, width, length);
-        double speed = SimulatorConfig.SPEED;
-        double deltaAngle = SimulatorConfig.DELTA_THETA;
         view = new ComunaView(this);
         clip1 = new AudioClip("file:" + file);
         mute = _mute;
@@ -37,38 +33,6 @@ public class Comuna {
     public double getHeight() {
         return territory.getHeight();
     }
-
-//    public void initVac(){
-//        for (int i = 0; i < SimulatorConfig.NUM_VAC; i++){
-//            VaccinationCentre vac = new VaccinationCentre(this);
-//            vacunatorios.add(vac);
-//
-//            for (int k = 0; k < vacunatorios.size(); k++){
-//                for (int l = 0; l < vacunatorios.size(); l++){
-//                    if (vacunatorios.get(k) != vacunatorios.get(l)){
-//                        while (vacunatorios.get(k).vaccinationCentre.intersects(vacunatorios.get(l).vaccinationCentre)){
-//                            vacunatorios.get(k).updateRandomCoor();
-//                        }
-//                    }
-//                }
-//            }
-//            view.getChildren().add(vac.perimeter);
-//        }
-//    }
-
-//    public void detectVaccineCentre(ArrayList<Pedestrian> _PedestrianList){
-//        for (Pedestrian pedestrian : _PedestrianList) {
-//            for (VaccinationCentre vacunatorio : vacunatorios) {
-//                if (vacunatorio.vaccinationCentre.contains(pedestrian.getX(), pedestrian.getY())) {
-//                    if (pedestrian.getStatus().equals("susceptible")) {
-//                        pedestrian.setStatus("vacunado");
-//                        Susceptible_Q -= 1;
-//                        Vaccinated_Q += 1;
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     public void computeNextState (double delta_t, ArrayList<Pedestrian> _PedestrianList) {
         for (Pedestrian pedestrian : _PedestrianList) {
@@ -191,10 +155,6 @@ public class Comuna {
         for (Pedestrian pedestrian : _PedestrianList) {
             view.update(pedestrian);
         }
-    }
-
-    public Pedestrian getPedestrian() {
-        return person;
     }
 
     public Group getView() {

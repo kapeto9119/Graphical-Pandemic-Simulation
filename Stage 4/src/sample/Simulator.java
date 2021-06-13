@@ -9,14 +9,14 @@ import java.util.ArrayList;
 
 public class Simulator {
     public Timeline animation;
-    private Comuna comuna;
-    private double simulationSamplingTime;
+    private final Comuna comuna;
+    private final double simulationSamplingTime;
     public double simulationTime;
-    private double delta_t;
-    private double p0, p1, p2;
-    private double maskFraction;
-    private int cant_p, cant_inf;
-    private double speed, deltaAngle, I_time, distance;
+    private final double delta_t;
+    private final double p0, p1, p2;
+    private final double maskFraction;
+    private final int cant_p, cant_inf;
+    private final double speed, deltaAngle, I_time, distance;
     public ArrayList<Pedestrian> Pedestrian_list = new ArrayList<>();
     private Scene mScene;
     private Stage4 _stage4;
@@ -57,7 +57,6 @@ public class Simulator {
         animation = new Timeline(new KeyFrame(Duration.millis(viewRefreshPeriod * 1000), e->takeAction()));
         animation.setCycleCount(Timeline.INDEFINITE);
         graph = _graph;
-        System.out.println("SIMULATOR VACTIME: " + SimulatorConfig.VAC_TIME);
     }
 
     private void takeAction() {
@@ -73,10 +72,8 @@ public class Simulator {
                 vacss.detectVaccineCentre(Pedestrian_list);
             }
         }
-        System.out.println(simulationTime);
         if (Math.round(simulationTime) == SimulatorConfig.VAC_TIME){
             if (initV){
-                System.out.println("initV: " + SimulatorConfig.VAC_TIME + ", simtime: " + simulationTime);
                 detVac = true;
                 vacss.initVac();
                 initV = false;

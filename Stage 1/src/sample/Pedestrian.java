@@ -3,8 +3,8 @@ package sample;
 public class Pedestrian {
     private double x, y, speed, angle, deltaAngle;
     private double x_tPlusDelta, y_tPlusDelta;
-    private Comuna comuna;
-    private PedestrianView pedestrianView;
+    private final Comuna comuna;
+    private final PedestrianView pedestrianView;
 
     public Pedestrian(Comuna comuna, double speed, double deltaAngle){
         this.comuna = comuna;

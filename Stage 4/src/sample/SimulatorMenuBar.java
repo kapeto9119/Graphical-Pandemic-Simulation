@@ -6,9 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.StackedAreaChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -49,7 +46,6 @@ public class SimulatorMenuBar extends MenuBar {
 
             Label title = new Label("Settings");
             title.setFont(new Font("Cambria", 30));
-            //title.setPrefSize(50, 50);
 
             ToggleButton toggleBtn = new ToggleButton("Mute");
 
@@ -295,36 +291,33 @@ public class SimulatorMenuBar extends MenuBar {
 
                 stage4.borderPane.setCenter(stage4.splitPane);
 
-                stage4.mScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent keyEvent) {
-                        if (keyEvent.getCode() == KeyCode.LEFT){
-                            if (stage4.simulator.rate == 1){
-                                stage4.simulator.rate = 0.5;
-                                stage4.simulator.detectAnimationRate();
-                            }
-                            if (stage4.simulator.rate == 2){
-                                stage4.simulator.rate = 1;
-                                stage4.simulator.detectAnimationRate();
-                            }
-                            if (stage4.simulator.rate == 4){
-                                stage4.simulator.rate = 2;
-                                stage4.simulator.detectAnimationRate();
-                            }
+                stage4.mScene.setOnKeyPressed(keyEvent -> {
+                    if (keyEvent.getCode() == KeyCode.LEFT){
+                        if (stage4.simulator.rate == 1){
+                            stage4.simulator.rate = 0.5;
+                            stage4.simulator.detectAnimationRate();
                         }
-                        if (keyEvent.getCode() == KeyCode.RIGHT){
-                            if (stage4.simulator.rate == 2){
-                                stage4.simulator.rate = 4;
-                                stage4.simulator.detectAnimationRate();
-                            }
-                            if (stage4.simulator.rate == 1){
-                                stage4.simulator.rate = 2;
-                                stage4.simulator.detectAnimationRate();
-                            }
-                            if (stage4.simulator.rate == 0.5){
-                                stage4.simulator.rate = 1;
-                                stage4.simulator.detectAnimationRate();
-                            }
+                        if (stage4.simulator.rate == 2){
+                            stage4.simulator.rate = 1;
+                            stage4.simulator.detectAnimationRate();
+                        }
+                        if (stage4.simulator.rate == 4){
+                            stage4.simulator.rate = 2;
+                            stage4.simulator.detectAnimationRate();
+                        }
+                    }
+                    if (keyEvent.getCode() == KeyCode.RIGHT){
+                        if (stage4.simulator.rate == 2){
+                            stage4.simulator.rate = 4;
+                            stage4.simulator.detectAnimationRate();
+                        }
+                        if (stage4.simulator.rate == 1){
+                            stage4.simulator.rate = 2;
+                            stage4.simulator.detectAnimationRate();
+                        }
+                        if (stage4.simulator.rate == 0.5){
+                            stage4.simulator.rate = 1;
+                            stage4.simulator.detectAnimationRate();
                         }
                     }
                 });

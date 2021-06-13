@@ -3,22 +3,19 @@ package sample;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
-import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 
 public class Simulator {
     public Timeline animation;
-    private Comuna comuna;
-    private double simulationSamplingTime;
+    private final Comuna comuna;
+    private final double simulationSamplingTime;
     public double simulationTime;
-    private double delta_t;
-    private int cant_p, cant_inf;
-    private double speed, deltaAngle, I_time, distance;
+    private final double delta_t;
+    private final int cant_p;
+    private final int cant_inf;
+    private final double speed, deltaAngle, I_time, distance;
     public ArrayList<Pedestrian> Pedestrian_list = new ArrayList<>();
-    private Scene mScene;
-    private Stage2 _stage2;
     public double rate;
 
     /**
@@ -26,8 +23,6 @@ public class Simulator {
      * @param simulationTime2realTimeRate how faster the simulation runs relative to real time
      */
     public Simulator (Stage2 _stage2, Scene _mScene, double framePerSecond, double simulationTime2realTimeRate, Comuna comuna, double _delta_t, int _cant_p, int _cant_inf, double _speed, double _deltaAngle, double _I_time, double _distance){
-        this.mScene = _mScene;
-        this._stage2 = _stage2;
         this.comuna = comuna;
         this.cant_p = _cant_p;
         this.cant_inf = _cant_inf;
@@ -55,8 +50,6 @@ public class Simulator {
             comuna.detectInfected(Pedestrian_list, simulationTime, distance);
             comuna.checkIfRecovered(simulationTime, Pedestrian_list, I_time);
         }
-        //System.out.println(simulationTime);
-        //detectArrow(mScene);
     }
 
     public void buildPedestrianArray(){
@@ -79,7 +72,6 @@ public class Simulator {
     }
 
     public void detectAnimationRate(){
-        //System.out.println(rate);
         animation.setRate(rate);
     }
 
@@ -87,14 +79,4 @@ public class Simulator {
         animation.stop();
         _simMenu.showSettings();
     }
-
-//    public void speedup(){
-//        System.out.println("SpeedUp");
-//        animation.setRate(2.0);
-//    }
-//
-//    public void slowdown(){
-//        System.out.println("SlowDown");
-//        animation.setRate(0.5);
-//    }
 }

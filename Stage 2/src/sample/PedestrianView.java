@@ -16,13 +16,13 @@ public class PedestrianView {
     public PedestrianView(Comuna comuna, Pedestrian p) {
         this.person = p;
         this.comuna = comuna;
-        if (p.getStatus() == "susceptible"){
+        if (p.getStatus().equals("susceptible")){
             avatarInf = null;
             avatarRec = null;
             avatarSusc = createSusc();
             comuna.getView().getChildren().add(avatarSusc);
         }
-        if (p.getStatus() == "infectado"){
+        if (p.getStatus().equals("infectado")){
             avatarSusc = null;
             avatarRec = null;
             avatarInf = createInf();
@@ -55,11 +55,11 @@ public class PedestrianView {
     }
 
     public void update(Pedestrian p) {
-        if (p.getStatus() == "susceptible"){
+        if (p.getStatus().equals("susceptible")){
             avatarSusc.setX(p.getX());
             avatarSusc.setY(p.getY());
         }
-        if (p.getStatus() == "infectado"){
+        if (p.getStatus().equals("infectado")){
             avatarInf.setCenterY(p.getX());
             avatarInf.setCenterY(p.getY());
         }
@@ -70,16 +70,16 @@ public class PedestrianView {
     }
 
     public void setForm(Pedestrian pedestrian, String _newstatus) {
-        if (pedestrian.getStatus() == "susceptible"){
-            if (_newstatus == "infectado") {
+        if (pedestrian.getStatus().equals("susceptible")){
+            if (_newstatus.equals("infectado")) {
                 comuna.getView().getChildren().remove(avatarSusc);
                 this.avatarSusc = null;
                 this.avatarInf = createInf();
                 comuna.getView().getChildren().add(avatarInf);
             }
         }
-        if (pedestrian.getStatus() == "infectado"){
-            if (_newstatus == "recuperado"){
+        if (pedestrian.getStatus().equals("infectado")){
+            if (_newstatus.equals("recuperado")){
                 comuna.getView().getChildren().remove(avatarInf);
                 this.avatarInf = null;
                 this.avatarRec = createRec();

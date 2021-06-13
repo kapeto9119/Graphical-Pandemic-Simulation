@@ -1,13 +1,11 @@
 package sample;
 
 import javafx.beans.binding.Bindings;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -165,15 +163,12 @@ public class SimulatorMenuBar extends MenuBar {
                 }
                 SimulatorConfig.D = Double.parseDouble(_D.getText());
 
-                //stage2.mScene = new Scene(stage2.borderPane, SimulatorConfig.WIDTH + 20, SimulatorConfig.LENGTH + 20);
-
                 stage2.comuna.refreshView();
                 stage2.comuna = new Comuna();
 
                 stage2.comuna.view = new ComunaView(stage2.comuna);
 
                 stage2.simulator = new Simulator(stage2, stage2.mScene, 15, 1, stage2.comuna, SimulatorConfig.DELTA_T, (int)SimulatorConfig.N, (int)SimulatorConfig.I, (int)SimulatorConfig.SPEED, (int)SimulatorConfig.DELTA_THETA, (int)SimulatorConfig.I_TIME, (int)SimulatorConfig.D);
-                //stage2.simulator.animation.playFromStart();
                 stage2.simulator.simulationTime = 0;
 
                 stage2.borderPane.setTop(new SimulatorMenuBar(stage2, mScene, stage2.borderPane, stage2.simulator));
@@ -182,36 +177,33 @@ public class SimulatorMenuBar extends MenuBar {
                 stage2.p.getChildren().add(stage2.comuna.getView());
 
 
-                stage2.mScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent keyEvent) {
-                            if (stage2.simulator.rate == 1){
-                                stage2.simulator.rate = 0.5;
-                        if (keyEvent.getCode() == KeyCode.LEFT){
-                                stage2.simulator.detectAnimationRate();
-                            if (stage2.simulator.rate == 2){
-                                stage2.simulator.rate = 1;
-                            }
-                                stage2.simulator.detectAnimationRate();
-                            }
-                            if (stage2.simulator.rate == 4){
-                                stage2.simulator.rate = 2;
-                                stage2.simulator.detectAnimationRate();
-                            }
+                stage2.mScene.setOnKeyPressed(keyEvent -> {
+                    if (keyEvent.getCode() == KeyCode.LEFT){
+                        if (stage2.simulator.rate == 1){
+                            stage2.simulator.rate = 0.5;
+                            stage2.simulator.detectAnimationRate();
                         }
-                        if (keyEvent.getCode() == KeyCode.RIGHT){
-                            if (stage2.simulator.rate == 2){
-                                stage2.simulator.rate = 4;
-                                stage2.simulator.detectAnimationRate();
-                            }
-                            if (stage2.simulator.rate == 1){
-                                stage2.simulator.rate = 2;
-                                stage2.simulator.detectAnimationRate();
-                            }
-                            if (stage2.simulator.rate == 0.5){
-                                stage2.simulator.rate = 1;
-                                stage2.simulator.detectAnimationRate();
-                            }
+                        if (stage2.simulator.rate == 2){
+                            stage2.simulator.rate = 1;
+                            stage2.simulator.detectAnimationRate();
+                        }
+                        if (stage2.simulator.rate == 4){
+                            stage2.simulator.rate = 2;
+                            stage2.simulator.detectAnimationRate();
+                        }
+                    }
+                    if (keyEvent.getCode() == KeyCode.RIGHT){
+                        if (stage2.simulator.rate == 2){
+                            stage2.simulator.rate = 4;
+                            stage2.simulator.detectAnimationRate();
+                        }
+                        if (stage2.simulator.rate == 1){
+                            stage2.simulator.rate = 2;
+                            stage2.simulator.detectAnimationRate();
+                        }
+                        if (stage2.simulator.rate == 0.5){
+                            stage2.simulator.rate = 1;
+                            stage2.simulator.detectAnimationRate();
                         }
                     }
                 });

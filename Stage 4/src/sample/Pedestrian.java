@@ -1,13 +1,17 @@
 package sample;
 
 public class Pedestrian {
-    private double x, y, speed, angle, deltaAngle;
+    private double x;
+    private double y;
+    private final double speed;
+    private double angle;
+    private final double deltaAngle;
     private double x_tPlusDelta, y_tPlusDelta;
-    private Comuna comuna;
+    private final Comuna comuna;
     public PedestrianView pedestrianView;
     private String status;
     private double infected_time;
-    private boolean maskOn;
+    private final boolean maskOn;
 
     public Pedestrian(Comuna comuna, double speed, double deltaAngle, String _status, boolean _maskOn){
         this.comuna = comuna;

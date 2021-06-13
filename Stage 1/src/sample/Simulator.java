@@ -2,7 +2,6 @@ package sample;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import javafx.scene.input.KeyEvent;
 
 public class Simulator {
     private Timeline animation;
@@ -17,8 +16,7 @@ public class Simulator {
      */
     public Simulator (double framePerSecond, double simulationTime2realTimeRate, Comuna comuna){
         this.comuna = comuna;
-        double viewRefreshPeriod = 1 / framePerSecond; // in [ms] real time used to display
-        // a new view on application
+        double viewRefreshPeriod = 1 / framePerSecond;
         simulationSamplingTime = viewRefreshPeriod * simulationTime2realTimeRate;
         delta_t = SimulatorConfig.DELTA_T;
         simulationTime = 0;
@@ -30,26 +28,16 @@ public class Simulator {
     private void takeAction() {
         double nextStop = simulationTime + simulationSamplingTime;
         for(; simulationTime < nextStop; simulationTime += delta_t) {
-            comuna.computeNextState(delta_t); // compute its next state based on current global state
-            comuna.updateState();             // update its state
+            comuna.computeNextState(delta_t);
+            comuna.updateState();
             comuna.updateView();
         }
-        //???
     }
     public void start(){
         animation.play();
-        //comuna.getView().setOnKeyPressed( e->keyHandle(e));
     }
-    private void keyHandle (KeyEvent e) {
-	/// ?????
-    }
+
     public void stop(){
         animation.stop();
-    }
-    public void speedup(){
-       //????
-    }
-    public void slowdown(){
-       // ???
     }
 }

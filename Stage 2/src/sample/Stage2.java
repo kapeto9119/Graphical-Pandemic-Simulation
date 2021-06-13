@@ -1,11 +1,10 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -40,50 +39,47 @@ public class Stage2 extends Application {
         borderPane = new BorderPane();
         mScene = new Scene(borderPane, SimulatorConfig.WIDTH + 50, SimulatorConfig.LENGTH + 50);
 
-
         _primaryStage.setScene(mScene);
+        primaryStage.getIcons().add(new Image("file:icon.png"));
 
         comuna = new Comuna();
         simulator = new Simulator(this, mScene, 15,1, comuna, SimulatorConfig.DELTA_T, (int)SimulatorConfig.N, (int)SimulatorConfig.I, SimulatorConfig.SPEED, SimulatorConfig.DELTA_THETA, SimulatorConfig.I_TIME, SimulatorConfig.D);
         borderPane.setTop(new SimulatorMenuBar(this, mScene, borderPane, simulator));
 
-        mScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.LEFT){
-                    if (simulator.rate == 1){
-                        simulator.rate = 0.5;
-                        simulator.detectAnimationRate();
-                    }
-                    if (simulator.rate == 2){
-                        simulator.rate = 1;
-                        simulator.detectAnimationRate();
-                    }
-                    if (simulator.rate == 4){
-                        simulator.rate = 2;
-                        simulator.detectAnimationRate();
-                    }
+        mScene.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.LEFT){
+                if (simulator.rate == 1){
+                    simulator.rate = 0.5;
+                    simulator.detectAnimationRate();
                 }
-                if (keyEvent.getCode() == KeyCode.RIGHT){
-                    if (simulator.rate == 2){
-                        simulator.rate = 4;
-                        simulator.detectAnimationRate();
-                    }
-                    if (simulator.rate == 1){
-                        simulator.rate = 2;
-                        simulator.detectAnimationRate();
-                    }
-                    if (simulator.rate == 0.5){
-                        simulator.rate = 1;
-                        simulator.detectAnimationRate();
-                    }
+                if (simulator.rate == 2){
+                    simulator.rate = 1;
+                    simulator.detectAnimationRate();
+                }
+                if (simulator.rate == 4){
+                    simulator.rate = 2;
+                    simulator.detectAnimationRate();
+                }
+            }
+            if (keyEvent.getCode() == KeyCode.RIGHT){
+                if (simulator.rate == 2){
+                    simulator.rate = 4;
+                    simulator.detectAnimationRate();
+                }
+                if (simulator.rate == 1){
+                    simulator.rate = 2;
+                    simulator.detectAnimationRate();
+                }
+                if (simulator.rate == 0.5){
+                    simulator.rate = 1;
+                    simulator.detectAnimationRate();
                 }
             }
         });
 
         p = new StackPane();
         p.getChildren().add(comuna.getView());
-        p.setAlignment(comuna.getView(), Pos.CENTER);
+        StackPane.setAlignment(comuna.getView(), Pos.CENTER);
 
         borderPane.setCenter(p);
         _primaryStage.show();
