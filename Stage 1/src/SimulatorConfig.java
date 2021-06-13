@@ -1,4 +1,3 @@
-package sample;
 import java.util.Scanner;
 
 // This class is just to read the input configuration file

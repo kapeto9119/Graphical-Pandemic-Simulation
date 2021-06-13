@@ -1,4 +1,4 @@
-JFXLIB = "/home/theuszero/USM/POO/javafx-sdk-11.0.2/lib" #change this for your JavaFx Lib
+JFXLIB = "/home/theuszero/USM/javafx-sdk-11.0.2/lib" #change this for your JavaFx Lib
 JFLAGS = -g -encoding ISO8859_1 --module-path $(JFXLIB) --add-modules javafx.controls,javafx.fxml
 JC = javac
 JVM= java  # Added by Agust�n Gonz�lez

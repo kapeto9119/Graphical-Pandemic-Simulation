@@ -1,5 +1,7 @@
-JFXLIB = "/home/theuszero/USM/POO/javafx-sdk-11.0.2/lib" #change this for your JavaFx Lib
-JFLAGS = -g -encoding ISO8859_1 --module-path $(JFXLIB) --add-modules javafx.controls,javafx.fxml
+JFXLIB = "/home/theuszero/USM/javafx-sdk-11.0.2/lib" #change this for your JavaFx Lib
+JAVAFX_JFLAGS = --module-path $(JFXLIB) --add-modules javafx.controls,javafx.fxml,javafx.media
+JFLAGS = -g -encoding ISO8859_1 $(JAVAFX_JFLAGS)
+MP3 = "BatmanSoundEffect.mp3"
 JC = javac
 JVM= java  # Added by Agust�n Gonz�lez
 .SUFFIXES: .java .class
@@ -8,14 +10,15 @@ JVM= java  # Added by Agust�n Gonz�lez
 
 CLASSES = *.java
 
-MAIN = Stage4
+MAIN = Stage1
 
 default: classes
 
 classes: $(CLASSES:.java=.class)
 
 run:
-	$(JVM) $(MAIN) $(ARGS) 'BatmanSoundEffect.mp3'
+	$(JVM) $(JAVAFX_JFLAGS) $(MAIN) $(ARGS) $(MP3)
 
 clean:
 	$(RM) *.class
+
