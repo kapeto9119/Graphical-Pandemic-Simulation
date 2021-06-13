@@ -1,9 +1,11 @@
-package sample;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class Simulator {
+    /*
+    Variables creadas en esta clase de acceso privado para la clase
+     */
     private Timeline animation;
     private Comuna comuna;
     private double simulationSamplingTime;
@@ -25,6 +27,10 @@ public class Simulator {
         animation.setCycleCount(Timeline.INDEFINITE);
 
     }
+    /**
+     * @method takeAction : realiza el computo del tiempo y del siguiente estado
+     * segun lo necesite, haciendo la llamada a actualizar el estado de una comuna.
+     */
     private void takeAction() {
         double nextStop = simulationTime + simulationSamplingTime;
         for(; simulationTime < nextStop; simulationTime += delta_t) {
@@ -33,10 +39,17 @@ public class Simulator {
             comuna.updateView();
         }
     }
+
+    /**
+     * @method start : realiza el llamado a animation.play()
+     */
     public void start(){
         animation.play();
     }
 
+    /**
+     * @method stop : realiza el llamado a animation.stop()
+     */
     public void stop(){
         animation.stop();
     }

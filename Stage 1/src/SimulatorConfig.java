@@ -1,7 +1,8 @@
 package sample;
-
 import java.util.Scanner;
 
+// This class is just to read the input configuration file
+// and then to have a convenient way to access each parameter.
 public class SimulatorConfig {
     public static double N, I, I_TIME;
     public static double WIDTH, LENGTH;
@@ -9,6 +10,9 @@ public class SimulatorConfig {
     public static double D, M, P0, P1, P2;
     public static double NUM_VAC, VAC_SIZE, VAC_TIME;
 
+    /*
+    Realiza la obtencion de los datos mediante un scanner.
+    */
     public SimulatorConfig(Scanner s){
         N = s.nextDouble(); I = s.nextDouble(); I_TIME = s.nextDouble();
         WIDTH = s.nextDouble(); LENGTH = s.nextDouble();

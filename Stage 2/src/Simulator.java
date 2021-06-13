@@ -1,5 +1,3 @@
-package sample;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -7,6 +5,9 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Simulator {
+    /*
+    Variables creadas en esta clase de acceso privado para la clase
+     */
     public Timeline animation;
     private final Comuna comuna;
     private final double simulationSamplingTime;
@@ -40,7 +41,10 @@ public class Simulator {
         animation = new Timeline(new KeyFrame(Duration.millis(viewRefreshPeriod * 1000), e->takeAction()));
         animation.setCycleCount(Timeline.INDEFINITE);
     }
-
+    /**
+     * @method takeAction : realiza el computo del tiempo y del siguiente estado
+     * segun lo necesite, haciendo la llamada a actualizar el estado de una comuna.
+     */
     private void takeAction() {
         double nextStop = simulationTime + simulationSamplingTime;
         for(; simulationTime < nextStop; simulationTime += delta_t) {
@@ -51,7 +55,9 @@ public class Simulator {
             comuna.checkIfRecovered(simulationTime, Pedestrian_list, I_time);
         }
     }
-
+    /**
+     * @method buildPedestrianArray : realiza la creacion del array de tipo pedestrian
+     */
     public void buildPedestrianArray(){
         int j;
         for (j = 0; j < (cant_p - cant_inf); j++){
@@ -63,18 +69,24 @@ public class Simulator {
             this.Pedestrian_list.add(person);
         }
     }
-
+    /**
+     * @method start : realiza el llamado a animation.play()
+     */
     public void start(SimulatorMenuBar _simMenu){
         rate = 1.0;
         detectAnimationRate();
         animation.play();
         _simMenu.hideSettings();
     }
-
+    /**
+     * @method detectAnimationRate : settea el rate de una animacion
+     */
     public void detectAnimationRate(){
         animation.setRate(rate);
     }
-
+    /**
+     * @method stop : realiza el llamado a animation.stop()
+     */
     public void stop(SimulatorMenuBar _simMenu){
         animation.stop();
         _simMenu.showSettings();

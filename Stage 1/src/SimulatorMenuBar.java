@@ -1,9 +1,12 @@
-package sample;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
 public class SimulatorMenuBar extends MenuBar {
+
+    /*
+    Constructor del menu del simulador, con sus respectivos items pedidos.
+    */
     public SimulatorMenuBar (Simulator simulator){
         Menu controlMenu = new Menu("Control");
         getMenus().add(controlMenu);

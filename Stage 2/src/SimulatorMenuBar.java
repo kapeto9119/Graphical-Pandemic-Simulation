@@ -1,4 +1,3 @@
-package sample;
 
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
@@ -16,6 +15,9 @@ public class SimulatorMenuBar extends MenuBar {
     private final Menu settingsMenu;
 
     public SimulatorMenuBar(Stage2 stage2, Scene mScene, BorderPane bpMain, Simulator simulator){
+        /*
+        items del menu
+        */
         Menu controlMenu = new Menu("Control");
         getMenus().add(controlMenu);
         settingsMenu = new Menu("Settings");
@@ -28,9 +30,21 @@ public class SimulatorMenuBar extends MenuBar {
         MenuItem settings = new MenuItem("Parameters");
         settingsMenu.getItems().add(settings);
 
+        /*
+        setters de acciones del simualdor
+        */
         start.setOnAction(e->{simulator.start(this);});
         stop.setOnAction(e->{simulator.stop(this);});
 
+        /*
+        setters de acciones del menu del simualdor, para la ventana aparte de condiguracion
+        de los parametros con los que se haran las simulaciones.
+        los botones usados especifican cual apartado sera cambiado, realizando asi una configuracion
+        a gusto del consumidor, colocando los parametros que el requiera utilizar.
+        tambien tiene la forma y el como sera cada botton especificado en la ventana, de esta forma
+        este subconjunto de bottones le daran forma a los resultados de los experimentos para modelar la pandemia
+        segun los parametros que ingrese el usuario.
+        */
         settingsMenu.setOnAction(e -> {
             Stage settingStage = new Stage();
             settingStage.setTitle("Settings");
@@ -213,11 +227,15 @@ public class SimulatorMenuBar extends MenuBar {
             });
         });
     }
-
+    /*
+    esconder los settings
+    */
     public void hideSettings(){
         settingsMenu.setDisable(true);
     }
-
+    /*
+    mostrar los settings
+    */
     public void showSettings(){
         settingsMenu.setDisable(false);
     }
