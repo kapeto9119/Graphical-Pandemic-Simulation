@@ -1,5 +1,3 @@
-package sample;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -7,20 +5,24 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class VaccinationCentre {
-
+    /*
+    Variables usadas para la clase
+     */
     public double x, y;
     Rectangle2D vaccinationCentre;
     Rectangle perimeter;
     Comuna comuna;
     private final ArrayList<VaccinationCentre> vacs = new ArrayList<>();
-
+    /*
+    centro de vacunacion para una comuna
+     */
     public VaccinationCentre(Comuna _comuna){
-
+        /*
+        valores del centro de la comuna
+         */
         comuna = _comuna;
-
         double Valor_max_X = SimulatorConfig.WIDTH - SimulatorConfig.VAC_SIZE;
         double Valor_min_X = 0;
-
         double Valor_max_Y = SimulatorConfig.LENGTH - SimulatorConfig.VAC_SIZE;
         double Valor_min_Y = 0;
 
@@ -34,7 +36,9 @@ public class VaccinationCentre {
         perimeter.setY(y + (SimulatorConfig.VAC_SIZE / 2));
 
     }
-
+    /*
+    proceso para iniciar la vacunacion
+     */
     public void initVac(){
         for (int i = 0; i < SimulatorConfig.NUM_VAC; i++){
             VaccinationCentre vac = new VaccinationCentre(comuna);
@@ -52,7 +56,9 @@ public class VaccinationCentre {
             comuna.view.getChildren().add(vac.perimeter);
         }
     }
-
+    /*
+    proceso para detectar un centro de vacunacion
+     */
     public void detectVaccineCentre(ArrayList<Pedestrian> _PedestrianList){
         for (Pedestrian pedestrian : _PedestrianList) {
             for (VaccinationCentre vacunatorio : vacs) {
@@ -66,7 +72,9 @@ public class VaccinationCentre {
             }
         }
     }
-
+    /*
+    coordenadas random de los centros de vacunacion
+     */
     public void updateRandomCoor(){
         double Valor_max_X = SimulatorConfig.WIDTH - SimulatorConfig.VAC_SIZE;
         double Valor_min_X = 0;

@@ -8,7 +8,7 @@ JVM= java  # Added by Agust�n Gonz�lez
 
 CLASSES = *.java
 
-MAIN = Stage2
+MAIN = Stage1
 
 default: classes
 

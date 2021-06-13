@@ -1,17 +1,19 @@
-package sample;
-
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
 
 public class Graph {
-
+    /**
+     * grafico para la interfaz del menu
+     */
     public XYChart.Series Susceptibles;
     public XYChart.Series Infected;
     public XYChart.Series Recovered;
     public XYChart.Series Vaccinated;
     public StackedAreaChart stack;
-
+    /**
+     * grafico para la interfaz del menu
+     */
     public Graph(Comuna comuna){
 
         NumberAxis xAxis = new NumberAxis();

@@ -1,5 +1,3 @@
-package sample;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -8,6 +6,9 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Simulator {
+    /*
+Variables creadas en esta clase de acceso privado para la clase
+*/
     public Timeline animation;
     private final Comuna comuna;
     private final double simulationSamplingTime;
@@ -58,7 +59,10 @@ public class Simulator {
         animation.setCycleCount(Timeline.INDEFINITE);
         graph = _graph;
     }
-
+    /**
+     * @method takeAction : realiza el computo del tiempo y del siguiente estado
+     * segun lo necesite, haciendo la llamada a actualizar el estado de una comuna.
+     */
     private void takeAction() {
         double simtime = simulationTime;
         double nextStop = simulationTime + simulationSamplingTime;
@@ -83,7 +87,9 @@ public class Simulator {
             graph.updateChart((int)simulationTime, comuna.Susceptible_Q, comuna.Infected_Q, comuna.Recovered_Q, comuna.Vaccinated_Q);
         }
     }
-
+    /**
+     * @method buildPedestrianArray : realiza la creacion del array de tipo pedestrian
+     */
     public void buildPersonArray(){
         int x, y, j, i;
         for (x = 0; x < Math.round((cant_p - cant_inf) * maskFraction); x++){
@@ -103,18 +109,24 @@ public class Simulator {
             this.Pedestrian_list.add(person);
         }
     }
-
+    /**
+     * @method start : realiza el llamado a animation.play()
+     */
     public void start(SimulatorMenuBar _simMenu){
         rate = 1.0;
         detectAnimationRate();
         animation.play();
         _simMenu.hideSettings();
     }
-
+    /**
+     * @method detectAnimationRate : settea el rate de una animacion
+     */
     public void detectAnimationRate(){
         animation.setRate(rate);
     }
-
+    /**
+     * @method stop : realiza el llamado a animation.stop()
+     */
     public void stop(SimulatorMenuBar _simMenu){
         animation.stop();
         _simMenu.showSettings();

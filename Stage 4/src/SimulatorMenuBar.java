@@ -1,5 +1,3 @@
-package sample;
-
 import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,23 +16,36 @@ import javafx.stage.Stage;
 public class SimulatorMenuBar extends MenuBar {
 
     private final Menu settingsMenu;
-
+    /*
+     creacion del menu del simulador, con sus respectivos items pedidos.
+     */
     public SimulatorMenuBar(Stage4 stage4, Scene mScene, BorderPane bpMain, Simulator simulator, boolean mute){
+                /*
+        items del menu
+        */
         Menu controlMenu = new Menu("Control");
         getMenus().add(controlMenu);
         settingsMenu = new Menu("Settings");
         getMenus().add(settingsMenu);
-
         MenuItem start = new MenuItem("Start");
         MenuItem stop = new MenuItem("Stop");
         controlMenu.getItems().addAll(start, stop);
-
         MenuItem settings = new MenuItem("Parameters");
         settingsMenu.getItems().add(settings);
-
+        /*
+        setters de acciones del simualdor
+        */
         start.setOnAction(e->{simulator.start(this);});
         stop.setOnAction(e->{simulator.stop(this);});
-
+        /*
+        setters de acciones del menu del simualdor, para la ventana aparte de condiguracion
+        de los parametros con los que se haran las simulaciones.
+        los botones usados especifican cual apartado sera cambiado, realizando asi una configuracion
+        a gusto del consumidor, colocando los parametros que el requiera utilizar.
+        tambien tiene la forma y el como sera cada botton especificado en la ventana, de esta forma
+        este subconjunto de bottones le daran forma a los resultados de los experimentos para modelar la pandemia
+        segun los parametros que ingrese el usuario.
+        */
         settingsMenu.setOnAction(e -> {
             Stage settingStage = new Stage();
             settingStage.setTitle("Settings");
@@ -327,11 +338,15 @@ public class SimulatorMenuBar extends MenuBar {
             });
         });
     }
-
+    /*
+    esconder los settings
+    */
     public void hideSettings(){
         settingsMenu.setDisable(true);
     }
-
+    /*
+    mostrar los settings
+    */
     public void showSettings(){
         settingsMenu.setDisable(false);
     }
